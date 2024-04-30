@@ -9,6 +9,21 @@ public class Restaurante {
     private ArrayList<String> categorias;
     private double rating;
 
+    public Restaurante() {
+        
+    }
+    
+    public Restaurante(ObjectId id) {
+        this.id=id;
+    }
+
+    public Restaurante(ObjectId id, String nombre, ArrayList<String> categorias, double rating) {
+        this.id = id;
+        this.nombre = nombre;
+        this.categorias = categorias;
+        this.rating = rating;
+    }
+    
     public Restaurante(String nombre, ArrayList<String> categorias, double rating) {
         this.nombre = nombre;
         this.categorias = categorias;

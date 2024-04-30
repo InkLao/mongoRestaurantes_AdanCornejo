@@ -73,7 +73,8 @@ public class MongoRestaurantes_228558 {
                 : rA) {
             System.out.println(restaurante);
         }
-
+        
+        /**
         // Eliminar el restaurante con ID específico
         String idAEliminar = "66315542cd38e973f5fa7593";
         if (dao.eliminarRestaurantePorId(idAEliminar)) {
@@ -81,6 +82,7 @@ public class MongoRestaurantes_228558 {
         } else {
             System.out.println("El restaurante no se pudo eliminar o no se encontró.");
         }
+        **/
         
         System.out.println("\nRestaurantes actualizados después de eliminar/no eliminar:");
         ArrayList<Restaurante> rae
@@ -89,5 +91,25 @@ public class MongoRestaurantes_228558 {
                 : rae) {
             System.out.println(restaurante);
         }
+        
+        // Eliminar los restaurantes con 3 estrellas o menos
+        dao.insertarRestaurante(new Restaurante("La Buena Mesa", new ArrayList<>(Arrays.asList("Española", "Tapas")), 2.4));
+        System.out.println("\nRestaurantes (con 3 estrellas o menos incluidas)");
+        ArrayList<Restaurante> rest
+                = dao.obtenerTodosLosRestaurantes();
+        for (Restaurante restaurante
+                : rest) {
+            System.out.println(restaurante);
+        }
+        long eliminados = dao.eliminarRestaurantesPorRating(3);
+        System.out.println("\nRestaurantes (con 3 estrellas o menos eliminadas)");
+        ArrayList<Restaurante> el
+                = dao.obtenerTodosLosRestaurantes();
+        for (Restaurante restaurante
+                : el) {
+            System.out.println(restaurante);
+        }
+        System.out.println("Número de restaurantes eliminados con 3 estrellas o menos: " + eliminados);
+
     }
 }

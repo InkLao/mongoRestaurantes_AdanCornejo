@@ -26,24 +26,68 @@ public class MongoRestaurantes_228558 {
          * dao.insertarRestaurante(new Restaurante("Sushi World", new
          * ArrayList<>(Arrays.asList("Sushi", "Japonesa")), 4.8));
          *
-         **/
-         // Consultar los restaurantes con más de 4 estrellas de rating
-         System.out.println("Restaurantes con más de 4 estrellas:");
-         ArrayList<Restaurante> restaurantesConAltoRating =
-         dao.consultarRestaurantesPorRating(4); for (Restaurante restaurante :
-         restaurantesConAltoRating) { System.out.println(restaurante); }
-         
-         // Consultar los restaurantes que incluyan la categoría pizza
-         System.out.println("\nRestaurantes que incluyen la categoría Pizza:"); ArrayList<Restaurante> restaurantesConPizza =
-         dao.consultarRestaurantesPorCategoria("Pizza"); for (Restaurante
-         restaurante : restaurantesConPizza) {
-         System.out.println(restaurante); }
+         *
+         */
+        // Consultar los restaurantes con más de 4 estrellas de rating
+        System.out.println("Restaurantes con más de 4 estrellas:");
+        ArrayList<Restaurante> restaurantesConAltoRating
+                = dao.consultarRestaurantesPorRating(4);
+        for (Restaurante restaurante
+                : restaurantesConAltoRating) {
+            System.out.println(restaurante);
+        }
+
+        // Consultar los restaurantes que incluyan la categoría pizza
+        System.out.println("\nRestaurantes que incluyen la categoría Pizza:");
+        ArrayList<Restaurante> restaurantesConPizza
+                = dao.consultarRestaurantesPorCategoria("Pizza");
+        for (Restaurante restaurante : restaurantesConPizza) {
+            System.out.println(restaurante);
+        }
+
+        // Consultar los restaurantes que incluyan sushi en su nombre
+        System.out.println("\nRestaurantes que incluyen 'Sushi' en el nombre:");
+        ArrayList<Restaurante> restaurantesConSushiEnNombre
+                = dao.obtenerTodosLosRestaurantes();
+        for (Restaurante restaurante
+                : restaurantesConSushiEnNombre) {
+            if (restaurante.getNombre().toLowerCase().contains("sushi")) {
+                System.out.println(restaurante);
+            }
+        }
+
+        /**
+         * Restaurante sushilito = new Restaurante("Sushilito", new
+         * ArrayList<>(Arrays.asList("Sushi", "Japonesa")), 4.2); sushilito =
+         * dao.insertarRestaurante(sushilito); // Guardar y obtener el ID
+         * asignado por MongoDB System.out.println("Categorías originales: " +
+         * sushilito.getCategorias());
+        *
+         */
+        // Agregar una categoría extra
+        // dao.agregarCategoriaARestaurante(sushilito.getId().toString(), "Fusión");
+        System.out.println("\nRestaurantes actualizados:");
+        ArrayList<Restaurante> rA
+                = dao.obtenerTodosLosRestaurantes();
+        for (Restaurante restaurante
+                : rA) {
+            System.out.println(restaurante);
+        }
+
+        // Eliminar el restaurante con ID específico
+        String idAEliminar = "66315542cd38e973f5fa7593";
+        if (dao.eliminarRestaurantePorId(idAEliminar)) {
+            System.out.println("Restaurante eliminado con éxito.");
+        } else {
+            System.out.println("El restaurante no se pudo eliminar o no se encontró.");
+        }
         
-         // Consultar los restaurantes que incluyan sushi en su nombre
-         System.out.println("\nRestaurantes que incluyen 'Sushi' en el nombre:"); ArrayList<Restaurante> restaurantesConSushiEnNombre =
-         dao.obtenerTodosLosRestaurantes(); for (Restaurante restaurante :
-         restaurantesConSushiEnNombre) { if
-         (restaurante.getNombre().toLowerCase().contains("sushi")) {
-         System.out.println(restaurante); } }
+        System.out.println("\nRestaurantes actualizados después de eliminar/no eliminar:");
+        ArrayList<Restaurante> rae
+                = dao.obtenerTodosLosRestaurantes();
+        for (Restaurante restaurante
+                : rae) {
+            System.out.println(restaurante);
+        }
     }
 }

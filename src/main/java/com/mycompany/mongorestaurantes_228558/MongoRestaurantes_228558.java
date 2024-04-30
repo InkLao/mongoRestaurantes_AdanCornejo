@@ -11,6 +11,6 @@ package com.mycompany.mongorestaurantes_228558;
 public class MongoRestaurantes_228558 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
     }
 }

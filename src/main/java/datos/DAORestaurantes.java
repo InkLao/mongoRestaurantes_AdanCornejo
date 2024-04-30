@@ -25,6 +25,16 @@ public class DAORestaurantes {
         database = mongoClient.getDatabase("restaurantes_228558");
         collection = database.getCollection("restaurantes");
     }
+    
+    public Restaurante insertarRestaurante(Restaurante restaurante) {
+    Document doc = new Document("nombre", restaurante.getNombre())
+        .append("categorias", restaurante.getCategorias())
+        .append("rating", restaurante.getRating());
+    collection.insertOne(doc);// Inserta el documento
+    restaurante.setId(doc.getObjectId("_id")); 
+    return restaurante; 
+}
+
 
     public ArrayList<Restaurante> consultarRestaurantesPorRating(double minRating) {
         ArrayList<Restaurante> restaurantes = new ArrayList<>();

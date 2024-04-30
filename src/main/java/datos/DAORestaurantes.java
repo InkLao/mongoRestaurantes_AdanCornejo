@@ -36,38 +36,44 @@ public class DAORestaurantes {
 }
 
 
-    public ArrayList<Restaurante> consultarRestaurantesPorRating(double minRating) {
-        ArrayList<Restaurante> restaurantes = new ArrayList<>();
-        try (MongoCursor<Document> cursor = collection.find(gt("rating", minRating)).iterator()) {
-            while (cursor.hasNext()) {
-                Document doc = cursor.next();
-                restaurantes.add(new Restaurante(doc.getString("nombre"), (ArrayList<String>) doc.getList("categorias", String.class), doc.getDouble("rating")));
-            }
+ public ArrayList<Restaurante> consultarRestaurantesPorRating(double minRating) {
+    ArrayList<Restaurante> restaurantes = new ArrayList<>();
+    try (MongoCursor<Document> cursor = collection.find(gt("rating", minRating)).iterator()) {
+        while (cursor.hasNext()) {
+            Document doc = cursor.next();
+            Restaurante restaurante = new Restaurante(doc.getString("nombre"), (ArrayList<String>) doc.getList("categorias", String.class), doc.getDouble("rating"));
+            restaurante.setId(doc.getObjectId("_id")); // Asigna el ID
+            restaurantes.add(restaurante);
         }
-        return restaurantes;
     }
-    
-    public ArrayList<Restaurante> consultarRestaurantesPorCategoria(String categoria) {
-        ArrayList<Restaurante> restaurantes = new ArrayList<>();
-        try (MongoCursor<Document> cursor = collection.find(all("categorias", Arrays.asList(categoria))).iterator()) {
-            while (cursor.hasNext()) {
-                Document doc = cursor.next();
-                restaurantes.add(new Restaurante(doc.getString("nombre"), (ArrayList<String>) doc.getList("categorias", String.class), doc.getDouble("rating")));
-            }
-        }
-        return restaurantes;
-    }
+    return restaurantes;
+}
 
-    public ArrayList<Restaurante> obtenerTodosLosRestaurantes() {
-        ArrayList<Restaurante> restaurantes = new ArrayList<>();
-        try (MongoCursor<Document> cursor = collection.find().iterator()) {
-            while (cursor.hasNext()) {
-                Document doc = cursor.next();
-                restaurantes.add(new Restaurante(doc.getString("nombre"), (ArrayList<String>) doc.getList("categorias", String.class), doc.getDouble("rating")));
-            }
+public ArrayList<Restaurante> consultarRestaurantesPorCategoria(String categoria) {
+    ArrayList<Restaurante> restaurantes = new ArrayList<>();
+    try (MongoCursor<Document> cursor = collection.find(all("categorias", Arrays.asList(categoria))).iterator()) {
+        while (cursor.hasNext()) {
+            Document doc = cursor.next();
+            Restaurante restaurante = new Restaurante(doc.getString("nombre"), (ArrayList<String>) doc.getList("categorias", String.class), doc.getDouble("rating"));
+            restaurante.setId(doc.getObjectId("_id")); // Asigna el ID
+            restaurantes.add(restaurante);
         }
-        return restaurantes;
     }
+    return restaurantes;
+}
+
+public ArrayList<Restaurante> obtenerTodosLosRestaurantes() {
+    ArrayList<Restaurante> restaurantes = new ArrayList<>();
+    try (MongoCursor<Document> cursor = collection.find().iterator()) {
+        while (cursor.hasNext()) {
+            Document doc = cursor.next();
+            Restaurante restaurante = new Restaurante(doc.getString("nombre"), (ArrayList<String>) doc.getList("categorias", String.class), doc.getDouble("rating"));
+            restaurante.setId(doc.getObjectId("_id")); // Asigna el ID
+            restaurantes.add(restaurante);
+        }
+    }
+    return restaurantes;
+}
 
     public void agregarCategoriaARestaurante(String id, String nuevaCategoria) {
         ObjectId objectId = new ObjectId(id);
